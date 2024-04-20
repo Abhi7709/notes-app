@@ -1,12 +1,13 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useState} from "react";
 import axios from 'axios';
-import './Home.css'
+import './Home.css';
+import NoteCard from "../../components/NoteCard/NoteCard";
 
 function Home(){
     const [notes, setNotes]= useState([]);
 
-    const loadNotes = async ()=>{
-        const response = await axios.get('http://localhost:5000/notes');
+    const loadNotes = async () =>{
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/notes`);
 
         console.log(response.data.data);
         setNotes(response.data.data);
@@ -16,18 +17,15 @@ function Home(){
         loadNotes();
     },[])
     return(
-        <div><h1>Home</h1>
+        <div>
+            <h1 className='app-header'>All Notes</h1>
 
         {
-            notes.map((note,index)=>{
-                return(
-                    <div>
-                    <h3>{note.title}</h3>
-                    <p>{note.content}</p>
-                    <span>{note.category}</span>
-                    </div>
-                    
-                )
+            notes.map((note)=>{
+                const{_id, title, content, category}=note;
+                return( <NoteCard key={_id} _id={_id} title={title} content={content} 
+                    category={category} loadNotes={loadNotes}/>)
+                  
             })
         }
         </div>
