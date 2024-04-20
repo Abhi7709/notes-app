@@ -16,7 +16,7 @@ import UpdateNote from './views/UpdateNote/UpdateNote';
       element: <Home/>
     },
     {
-      path:"/new",
+      path:"/new-note",
       element: <NewNote/>
     },
     {
